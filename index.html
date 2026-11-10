@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Pixel2Panel - ILI9341 图片裁切、RGB565 编码和 STM32 C 头文件生成工具"
+    />
+    <meta name="theme-color" content="#102a2d" />
+    <title>Pixel2Panel - ILI9341 Image Studio</title>
+    <link rel="icon" href="./assets/favicon.ico" sizes="any" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="brand" href="./" aria-label="Pixel2Panel 首页">
+        <img src="./assets/logo-64.png" width="36" height="36" alt="" />
+        <span class="brand-copy">
+          <strong>Pixel2Panel</strong>
+          <small>ILI9341 Image Studio</small>
+        </span>
+      </a>
+      <div class="header-meta">
+        <span class="version-tag">v0.1.0</span>
+        <span class="privacy-tag">
+          <span class="status-dot" aria-hidden="true"></span>
+          本地处理
+        </span>
+        <a class="text-link" href="./README.md">使用说明</a>
+        <a
+          class="text-link"
+          href="https://github.com/Lissa7zz/ili9341-image-studio"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel source-panel" aria-labelledby="source-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">01 / 输入</p>
+            <h1 id="source-title">选择照片</h1>
+          </div>
+          <button
+            class="icon-button"
+            id="reset-source"
+            type="button"
+            title="清除图片"
+            aria-label="清除图片"
+            disabled
+          >
+            ×
+          </button>
+        </div>
+
+        <button class="drop-zone" id="drop-zone" type="button">
+          <span class="drop-mark" aria-hidden="true">+</span>
+          <strong>拖入图片或选择文件</strong>
+          <span>JPG · PNG · WebP</span>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/bmp"
+            hidden
+          />
+        </button>
+
+        <dl class="source-facts">
+          <div>
+            <dt>文件名</dt>
+            <dd id="source-name">示例画面</dd>
+          </div>
+          <div>
+            <dt>原始尺寸</dt>
+            <dd id="source-size">演示</dd>
+          </div>
+          <div>
+            <dt>文件大小</dt>
+            <dd id="source-file-size">--</dd>
+          </div>
+        </dl>
+
+        <p class="local-note">
+          图片只留在当前浏览器内，不需要上传服务器。
+        </p>
+      </section>
+
+      <section class="panel preview-panel" aria-labelledby="preview-title">
+        <div class="panel-heading preview-heading">
+          <div>
+            <p class="eyebrow">02 / 预览</p>
+            <h2 id="preview-title">屏幕画面</h2>
+          </div>
+          <div class="display-summary">
+            <span id="display-size">320 × 240</span>
+            <span>RGB565</span>
+          </div>
+        </div>
+
+        <div class="canvas-stage" id="canvas-stage">
+          <canvas
+            id="preview-canvas"
+            width="320"
+            height="240"
+            aria-label="屏幕输出预览"
+          ></canvas>
+          <span class="corner-label" id="crop-label">填充画面</span>
+        </div>
+
+        <div class="preview-stats" aria-live="polite">
+          <div>
+            <span>像素</span>
+            <strong id="pixel-count">76,800</strong>
+          </div>
+          <div>
+            <span>Flash 数据</span>
+            <strong id="data-size">150 KB</strong>
+          </div>
+          <div>
+            <span>字节顺序</span>
+            <strong>高字节先发</strong>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel control-panel" aria-labelledby="controls-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">03 / 输出</p>
+            <h2 id="controls-title">画面适配</h2>
+          </div>
+          <button
+            class="text-button"
+            id="reset-settings"
+            type="button"
+          >
+            重置
+          </button>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <label for="output-width">输出尺寸</label>
+            <span>px</span>
+          </div>
+          <div class="dimension-row">
+            <input
+              id="output-width"
+              type="number"
+              min="16"
+              max="1024"
+              step="1"
+              value="320"
+              aria-label="输出宽度"
+            />
+            <span aria-hidden="true">×</span>
+            <input
+              id="output-height"
+              type="number"
+              min="16"
+              max="1024"
+              step="1"
+              value="240"
+              aria-label="输出高度"
+            />
+          </div>
+          <div class="segmented compact" id="size-presets" aria-label="尺寸预设">
+            <button type="button" data-width="320" data-height="240" class="active">
+              横屏
+            </button>
+            <button type="button" data-width="240" data-height="320">
+              竖屏
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span id="fit-label">裁切方式</span>
+            <span id="fit-note">自动居中</span>
+          </div>
+          <div class="segmented" id="fit-options" aria-labelledby="fit-label">
+            <button type="button" data-fit="cover" class="active">填充</button>
+            <button type="button" data-fit="contain">完整</button>
+            <button type="button" data-fit="stretch">拉伸</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span id="rotation-label">旋转</span>
+            <span>顺时针</span>
+          </div>
+          <div
+            class="segmented compact"
+            id="rotation-options"
+            aria-labelledby="rotation-label"
+          >
+            <button type="button" data-rotation="0" class="active">0°</button>
+            <button type="button" data-rotation="90">90°</button>
+            <button type="button" data-rotation="180">180°</button>
+            <button type="button" data-rotation="270">270°</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span id="focus-label">画面焦点</span>
+            <span>九宫格</span>
+          </div>
+          <div class="focus-grid" id="focus-grid" aria-labelledby="focus-label">
+            <button type="button" data-x="0.2" data-y="0.2" aria-label="左上"></button>
+            <button type="button" data-x="0.5" data-y="0.2" aria-label="上方"></button>
+            <button type="button" data-x="0.8" data-y="0.2" aria-label="右上"></button>
+            <button type="button" data-x="0.2" data-y="0.5" aria-label="左侧"></button>
+            <button
+              type="button"
+              data-x="0.5"
+              data-y="0.5"
+              class="active"
+              aria-label="中央"
+            ></button>
+            <button type="button" data-x="0.8" data-y="0.5" aria-label="右侧"></button>
+            <button type="button" data-x="0.2" data-y="0.8" aria-label="左下"></button>
+            <button type="button" data-x="0.5" data-y="0.8" aria-label="下方"></button>
+            <button type="button" data-x="0.8" data-y="0.8" aria-label="右下"></button>
+          </div>
+        </div>
+
+        <div class="control-group inline-control">
+          <label for="zoom">缩放</label>
+          <input id="zoom" type="range" min="100" max="220" value="100" />
+          <output id="zoom-value" for="zoom">100%</output>
+        </div>
+
+        <div class="control-group inline-control" id="background-control">
+          <label for="background-color">补边颜色</label>
+          <input id="background-color" type="color" value="#000000" />
+          <span id="background-value">#000000</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <label for="array-name">C 数组名</label>
+            <span id="array-status">有效</span>
+          </div>
+          <input
+            class="text-input code-font"
+            id="array-name"
+            type="text"
+            value="demo_image_rgb565"
+            spellcheck="false"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="export-actions">
+          <button class="primary-button" id="download-header" type="button" disabled>
+            下载 STM32 .h
+          </button>
+          <div class="secondary-actions">
+            <button class="secondary-button" id="download-bin" type="button" disabled>
+              原始 .bin
+            </button>
+            <button class="secondary-button" id="download-ico" type="button" disabled>
+              项目 .ico
+            </button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="app-footer">
+      <span>Pixel2Panel · MIT License</span>
+      <span class="footer-tech">STM32G474 · ILI9341 · 320 × 240</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="help-dialog" id="help-dialog">
+      <button
+        class="icon-button close-dialog"
+        id="close-help"
+        type="button"
+        aria-label="关闭"
+      >
+        ×
+      </button>
+      <p class="eyebrow">Pixel2Panel</p>
+      <h2>快速开始</h2>
+      <p>选择照片，调整焦点和裁切方式，然后下载 STM32 头文件。</p>
+      <p>导出的数组可直接传给项目中的 LCD_DrawImage 函数。</p>
+    </dialog>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

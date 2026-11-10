@@ -1,0 +1,21 @@
+{
+  "name": "ili9341-image-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser-based RGB565 image converter for STM32 and ILI9341 displays",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test --test-isolation=none tests/*.test.mjs"
+  },
+  "keywords": [
+    "stm32",
+    "ili9341",
+    "rgb565",
+    "image-converter"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^31.0.0"
+  }
+}
