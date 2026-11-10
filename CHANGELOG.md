@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2026-11-10
+
+### Fixed
+
+- Quoted the Windows launcher command so `start.bat` opens consistently.
+
 ## [0.1.0] - 2026-11-10
 
 ### Added
