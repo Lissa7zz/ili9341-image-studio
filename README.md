@@ -1,5 +1,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[![CI](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml)
+
 # Pixel2Panel
 
 Pixel2Panel is a browser-based image preparation tool for STM32 and ILI9341
@@ -16,7 +18,7 @@ to a server.
 - JPG, PNG, WebP, and BMP input
 - Cover, contain, and stretch fitting modes
 - Three-by-three focus control, zoom, rotation, and custom dimensions
-- RGB565 C header export
+- Paired RGB565 `.h` and `.c` source export
 - Raw RGB565 `.bin` export
 - 256 x 256 PNG-backed `.ico` project icon export
 - No runtime dependencies and no backend
@@ -39,16 +41,26 @@ the browser.
 
 ## Export format
 
-The default output is `320 x 240` RGB565. Each pixel uses two bytes with the
-high byte first. This matches STM32 little-endian `uint16_t` storage and the
-byte order used by the included ILI9341 driver.
+The default output is `320 x 240` RGB565. The download contains a ZIP with a
+declaration header and a matching source file. Each pixel uses two bytes with
+the high byte first. This matches STM32 little-endian `uint16_t` storage and
+the byte order used by the included ILI9341 driver.
 
-The generated array can be passed directly to `LCD_DrawImage()`:
+Add both generated files to the STM32 project:
+
+- `photo_rgb565.h` declares the image, dimensions, and data size.
+- `photo_rgb565.c` contains the RGB565 bitmap.
+
+The generated source can be passed directly to `ILI9341_DrawRGB565Image()`:
 
 ```c
 #include "photo_rgb565.h"
 
-LCD_DrawImage(photo_rgb565, PHOTO_RGB565_DATA_SIZE);
+ILI9341_DrawRGB565Image(
+    photo_rgb565,
+    PHOTO_RGB565_DATA_SIZE,
+    PHOTO_RGB565_WIDTH,
+    PHOTO_RGB565_HEIGHT);
 ```
 
 A full-screen `320 x 240` RGB565 image contains:
@@ -61,13 +73,15 @@ A full-screen `320 x 240` RGB565 image contains:
 
 ```bash
 npm test
+npm run test:e2e
 npm start
 ```
 
 Core encoding logic is in `src/core.js`. Browser interaction and Canvas
 rendering are in `src/app.js`.
 
-Browser interaction tests use jsdom. The production page has no runtime
+Unit and DOM tests use Node's test runner and jsdom. Chromium tests use
+Playwright at desktop and mobile viewports. The production page has no runtime
 dependencies.
 
 ## Roadmap

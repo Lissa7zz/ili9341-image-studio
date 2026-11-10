@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-11-10
+
+### Added
+
+- Paired STM32 `.h` and `.c` source export inside a ZIP archive.
+- Real Chromium browser tests for image loading, Canvas rendering, responsive
+  layout, and source archive downloads.
+- GitHub Actions CI for unit, DOM, and browser tests.
+
+### Changed
+
+- Generated headers now contain declarations instead of full image data,
+  preventing duplicate definitions when included by multiple source files.
+
 ## [0.1.1] - 2026-11-10
 
 ### Fixed

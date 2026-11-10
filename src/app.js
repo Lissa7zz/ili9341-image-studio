@@ -4,6 +4,8 @@ import {
   clampDimension,
   createHeader,
   createIco,
+  createSource,
+  createZip,
   formatBytes,
   isValidCIdentifier,
   rgbaToRgb565Bytes,
@@ -420,15 +422,35 @@ function downloadHeader() {
   elements.arrayName.value = identifier;
   ensureEncoded();
 
+  const generatedAt = new Date();
   const header = createHeader({
     identifier,
     width: state.width,
     height: state.height,
     data: state.rgb565,
     sourceName: state.imageName,
+    generatedAt,
   });
-  downloadBlob(new Blob([header], { type: "text/x-c;charset=utf-8" }), `${identifier}.h`);
-  showToast("STM32 头文件已生成");
+  const source = createSource({
+    identifier,
+    width: state.width,
+    height: state.height,
+    data: state.rgb565,
+    sourceName: state.imageName,
+    generatedAt,
+  });
+  const archive = createZip(
+    [
+      { name: `${identifier}.h`, data: header },
+      { name: `${identifier}.c`, data: source },
+    ],
+    generatedAt,
+  );
+  downloadBlob(
+    new Blob([archive], { type: "application/zip" }),
+    `${identifier}.zip`,
+  );
+  showToast("STM32 源码包已生成：包含 .h 和 .c");
 }
 
 function downloadBinary() {

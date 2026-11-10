@@ -118,9 +118,9 @@ test("loads an image and enables exports", async () => {
   assert.equal(document.querySelector("#download-ico").disabled, false);
 });
 
-test("downloads the generated C header with the expected name", () => {
+test("downloads the generated source archive with the expected name", () => {
   document.querySelector("#download-header").click();
-  assert.equal(lastDownload.name, "image_224_photo_name_rgb565.h");
+  assert.equal(lastDownload.name, "image_224_photo_name_rgb565.zip");
   assert.equal(lastDownload.href, "blob:test");
 });
 

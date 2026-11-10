@@ -4,6 +4,8 @@ import test from "node:test";
 import {
   createHeader,
   createIco,
+  createSource,
+  createZip,
   formatBytes,
   isValidCIdentifier,
   rgbToRgb565,
@@ -48,7 +50,7 @@ test("sanitizes identifiers for generated C files", () => {
   assert.equal(isValidCIdentifier("224_photo"), false);
 });
 
-test("creates a self-contained STM32 C header", () => {
+test("creates a declaration-only STM32 C header", () => {
   const data = new Uint8Array([0xf8, 0x00, 0x07, 0xe0]);
   const header = createHeader({
     identifier: "test_image",
@@ -63,8 +65,24 @@ test("creates a self-contained STM32 C header", () => {
   assert.match(header, /#define TEST_IMAGE_WIDTH 2U/);
   assert.match(header, /#define TEST_IMAGE_HEIGHT 1U/);
   assert.match(header, /#define TEST_IMAGE_DATA_SIZE \(TEST_IMAGE_WIDTH \* TEST_IMAGE_HEIGHT \* 2U\)/);
-  assert.match(header, /const uint8_t test_image\[TEST_IMAGE_DATA_SIZE\]/);
-  assert.match(header, /0xF8U, 0x00U, 0x07U, 0xE0U/);
+  assert.match(header, /extern const uint8_t test_image\[TEST_IMAGE_DATA_SIZE\];/);
+  assert.doesNotMatch(header, /0xF8U/);
+});
+
+test("creates the matching STM32 C source", () => {
+  const source = createSource({
+    identifier: "test_image",
+    width: 2,
+    height: 1,
+    data: new Uint8Array([0xf8, 0x00, 0x07, 0xe0]),
+    sourceName: "test.png",
+    generatedAt: new Date("2026-11-10T00:00:00Z"),
+  });
+
+  assert.match(source, /#include "test_image\.h"/);
+  assert.match(source, /const uint8_t test_image\[TEST_IMAGE_DATA_SIZE\]/);
+  assert.match(source, /0xF8U, 0x00U, 0x07U, 0xE0U/);
+  assert.doesNotMatch(source, /#ifndef/);
 });
 
 test("creates a standard PNG-backed ICO container", () => {
@@ -85,4 +103,20 @@ test("creates a standard PNG-backed ICO container", () => {
 test("formats image data sizes", () => {
   assert.equal(formatBytes(153600), "150 KB");
   assert.equal(formatBytes(512), "512 B");
+});
+
+test("creates a ZIP archive containing source and header files", () => {
+  const archive = createZip(
+    [
+      { name: "test_image.h", data: "#pragma once\n" },
+      { name: "test_image.c", data: "const int test_image = 1;\n" },
+    ],
+    new Date("2026-11-10T00:00:00Z"),
+  );
+  const view = new DataView(archive.buffer, archive.byteOffset, archive.byteLength);
+  assert.equal(view.getUint32(0, true), 0x04034b50);
+  const text = new TextDecoder().decode(archive);
+  assert.match(text, /test_image\.h/);
+  assert.match(text, /test_image\.c/);
+  assert.equal(view.getUint32(archive.length - 22, true), 0x06054b50);
 });
