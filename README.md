@@ -86,6 +86,22 @@ not call their servers or APIs:
 - AppShot ICO: project icon generation
 - Image to RGB565 Converter: RGB565 conversion
 
+## Developer
+
+- Developer: Lissa7zz
+- AI collaboration: OpenAI Codex
+- Contact: [millergordon72@gmail.com](mailto:millergordon72@gmail.com)
+
 ## License
 
-[MIT](LICENSE)
+Copyright (C) 2026 Lissa7zz
+
+This project is released under the [MIT License](LICENSE). You may copy,
+modify, and distribute the project under its terms.
+
+The software is provided "AS IS", without any express or implied warranty.
+Third-party components remain subject to their respective licenses.
+
+---
+
+<p align="center"><em>كأن قلبي لم يعد ينبض؛ والريح الباردة تطلق تنهداتها — سانتاباد.</em></p>

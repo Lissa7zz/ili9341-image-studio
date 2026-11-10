@@ -76,6 +76,20 @@ npm start
 - AppShot ICO：项目图标生成
 - Image to RGB565 Converter：RGB565 数据转换
 
-## License
+## 开发者
 
-[MIT](LICENSE)
+- 开发者：Lissa7zz
+- AI 协作：OpenAI Codex
+- 联系：[millergordon72@gmail.com](mailto:millergordon72@gmail.com)
+
+## 开源协议
+
+Copyright (C) 2026 Lissa7zz
+
+本项目采用 [MIT License](LICENSE) 发布。你可以依据该协议复制、修改和分发本项目。
+
+本项目按“现状”提供，不附带任何明示或默示担保。第三方组件适用各自的许可证。
+
+---
+
+<p align="center"><em>كأن قلبي لم يعد ينبض؛ والريح الباردة تطلق تنهداتها — سانتاباد.</em></p>
