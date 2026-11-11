@@ -2,24 +2,24 @@
 
 [![CI](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml)
 
-**[快速入口 / Quick access: Open Pixel2Panel online](https://lissa7zz.github.io/ili9341-image-studio/)**
+**⚡[快速入口 / Quick access: Open Pixel2Panel online](https://lissa7zz.github.io/ili9341-image-studio/)**
 
-# Pixel2Panel
+# 💤Pixel2Panel
 
-Pixel2Panel is a browser-based image preparation tool for STM32 and ILI9341
+&nbsp;&nbsp;&nbsp;&nbsp;Pixel2Panel is a browser-based image preparation tool for STM32 and ILI9341
 displays. Drop in an image, fit it to the display dimensions, convert it to
 RGB565, and download a C header that can be added directly to an STM32 project.
 
-All image processing happens locally in the browser. Images are not uploaded
+&nbsp;&nbsp;&nbsp;&nbsp;All image processing happens locally in the browser. Images are not uploaded
 to a server.
 
-## Demo
+## 💻Demo
 
 [![Pixel2Panel workflow](assets/demo.gif)](assets/demo.gif)
 
 ![STM32G474 hardware result](assets/demo-result.jpg)
 
-## Features
+## 🗿Features
 
 - JPG, PNG, WebP, and BMP input
 - Cover, contain, and stretch fitting modes
@@ -29,7 +29,7 @@ to a server.
 - 256 x 256 PNG-backed `.ico` project icon export
 - No runtime dependencies and no backend
 
-## Quick start
+## 🗿Quick start
 
 Node.js 18 or newer is required.
 
@@ -45,7 +45,7 @@ opening `index.html` directly.
 Windows users can also run `start.bat`. It starts the local server and opens
 the browser.
 
-## Export format
+## 🗿Export format
 
 The default output is `320 x 240` RGB565. The download contains a ZIP with a
 declaration header and a matching source file. Each pixel uses two bytes with
@@ -75,7 +75,7 @@ A full-screen `320 x 240` RGB565 image contains:
 320 * 240 * 2 = 153,600 bytes
 ```
 
-## Development
+## 🗿Development
 
 ```bash
 npm test
@@ -90,14 +90,14 @@ Unit and DOM tests use Node's test runner and jsdom. Chromium tests use
 Playwright at desktop and mobile viewports. The production page has no runtime
 dependencies.
 
-## Roadmap
+## 🗿Roadmap
 
 - Batch image processing and multi-image slideshow headers
 - Compressed formats loaded from external SPI Flash
 - More precise drag positioning and comparison previews
 - Generated STM32 example projects
 
-## Third-party references
+## 🗿Third-party references
 
 The workflow was informed by the following online tools. This project does
 not call their servers or APIs:
@@ -106,15 +106,15 @@ not call their servers or APIs:
 - AppShot ICO: project icon generation
 - Image to RGB565 Converter: RGB565 conversion
 
-## Developer
+## 🗿Developer
 
 - Developer: Lissa7zz
 - AI collaboration: OpenAI Codex
 - Contact: [millergordon72@gmail.com](mailto:millergordon72@gmail.com)
 
-## License
+## 🪦License
 
-Copyright (C) 2026 Lissa7zz
+🪎Copyright (C) 2026 Lissa7zz
 
 This project is released under the [MIT License](LICENSE). You may copy,
 modify, and distribute the project under its terms.
