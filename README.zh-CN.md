@@ -16,6 +16,19 @@ Pixel2Panel 是一个面向 STM32 和 ILI9341 屏幕的浏览器图片处理工�
 
 ![STM32G474 实机显示成果](assets/demo-result.jpg)
 
+## 下载 Windows 版
+
+最新版本提供：
+
+- `.msi` 安装包
+- NSIS `.exe` 安装包
+- 单文件便携版 `.exe`
+- `SHA256SUMS.txt` 校验文件
+
+[下载最新 Windows 版本](https://github.com/Lissa7zz/ili9341-image-studio/releases/latest)
+
+Windows 10 和 Windows 11 通常已经安装 Microsoft WebView2。便携版使用本地图片处理，不需要联网。
+
 ## 功能
 
 - JPG、PNG、WebP、BMP 图片输入
@@ -25,6 +38,7 @@ Pixel2Panel 是一个面向 STM32 和 ILI9341 屏幕的浏览器图片处理工�
 - 原始 RGB565 `.bin` 导出
 - 256 x 256 PNG-backed `.ico` 项目图标导出
 - 零运行时依赖，不需要后端
+- 可选的原生 Windows 桌面版本
 
 ## 快速启动
 
@@ -39,6 +53,22 @@ npm start
 由于页面使用 ES Module，请通过本地服务器访问，不要直接双击 `index.html`。
 
 Windows 用户也可以双击 `start.bat`，脚本会启动本地服务并打开浏览器。
+
+### Windows 桌面版开发
+
+```bash
+npm ci
+npm run desktop:dev
+```
+
+生成 Windows 安装包和便携版：
+
+```bash
+npm run desktop:build
+npm run release:prepare
+```
+
+生成文件位于 `release-assets/`。
 
 ## 导出格式
 

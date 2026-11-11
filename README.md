@@ -19,6 +19,20 @@ to a server.
 
 ![STM32G474 hardware result](assets/demo-result.jpg)
 
+## Download for Windows
+
+The latest release provides:
+
+- `.msi` installer
+- NSIS `.exe` installer
+- Single-file portable `.exe`
+- `SHA256SUMS.txt`
+
+[Download the latest Windows release](https://github.com/Lissa7zz/ili9341-image-studio/releases/latest)
+
+Windows 10 and Windows 11 normally include Microsoft WebView2. The portable
+EXE uses local image processing and requires no network connection.
+
 ## Features
 
 - JPG, PNG, WebP, and BMP input
@@ -28,6 +42,7 @@ to a server.
 - Raw RGB565 `.bin` export
 - 256 x 256 PNG-backed `.ico` project icon export
 - No runtime dependencies and no backend
+- Optional native Windows desktop build
 
 ## Quick start
 
@@ -44,6 +59,22 @@ opening `index.html` directly.
 
 Windows users can also run `start.bat`. It starts the local server and opens
 the browser.
+
+### Windows desktop development
+
+```bash
+npm ci
+npm run desktop:dev
+```
+
+Build the Windows installers and portable executable with:
+
+```bash
+npm run desktop:build
+npm run release:prepare
+```
+
+The prepared files are written to `release-assets/`.
 
 ## Export format
 

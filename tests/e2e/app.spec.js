@@ -11,6 +11,11 @@ test("loads an image, renders it, and downloads an STM32 source archive", async 
   await page.goto("/");
   await expect(page).toHaveTitle(/Pixel2Panel/);
   await expect(page.locator("#preview-canvas")).toBeVisible();
+  await expect(page.locator(".quick-access-button")).toHaveAttribute("href", "#drop-zone");
+  await expect(page.locator(".windows-download-button")).toHaveAttribute(
+    "href",
+    "https://github.com/Lissa7zz/ili9341-image-studio/releases/latest",
+  );
 
   await page.locator("#file-input").setInputFiles(demoImage);
   await expect(page.locator("#source-name")).toHaveText("demo.jpg");

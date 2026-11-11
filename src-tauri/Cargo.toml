@@ -1,0 +1,30 @@
+[package]
+name = "pixel2panel"
+version = "0.3.0"
+description = "Browser-based RGB565 image converter for STM32 and ILI9341 displays"
+authors = ["Lissa7zz"]
+license = "MIT"
+repository = "https://github.com/Lissa7zz/ili9341-image-studio"
+edition = "2021"
+
+[lib]
+name = "pixel2panel_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+base64 = "0.22"
+open = "5"
+rfd = "0.15"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true

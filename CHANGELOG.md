@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-11-11
+
+### Added
+
+- First-screen quick access and Windows download actions.
+- Tauri desktop application with native Save As dialogs.
+- Windows MSI, NSIS installer, and portable EXE release workflow.
+- SHA-256 checksums for all Windows release assets.
+
 ## [0.2.0] - 2026-11-10
 
 ### Added

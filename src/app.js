@@ -390,7 +390,36 @@ function clearImage() {
   showToast("已清除图片");
 }
 
-function downloadBlob(blob, fileName) {
+function isTauriRuntime() {
+  return Boolean(window.__TAURI__?.core?.invoke);
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result);
+      resolve(result.slice(result.indexOf(",") + 1));
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function downloadBlob(blob, fileName) {
+  if (isTauriRuntime()) {
+    try {
+      const base64Data = await blobToBase64(blob);
+      return await window.__TAURI__.core.invoke("save_file", {
+        defaultName: fileName,
+        base64Data,
+      });
+    } catch {
+      showToast("文件保存失败");
+      return false;
+    }
+  }
+
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -399,6 +428,7 @@ function downloadBlob(blob, fileName) {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return true;
 }
 
 function ensureEncoded() {
@@ -407,7 +437,7 @@ function ensureEncoded() {
   }
 }
 
-function downloadHeader() {
+async function downloadHeader() {
   if (!state.image) {
     return;
   }
@@ -446,22 +476,29 @@ function downloadHeader() {
     ],
     generatedAt,
   );
-  downloadBlob(
+  const saved = await downloadBlob(
     new Blob([archive], { type: "application/zip" }),
     `${identifier}.zip`,
   );
-  showToast("STM32 源码包已生成：包含 .h 和 .c");
+  if (saved) {
+    showToast("STM32 源码包已生成：包含 .h 和 .c");
+  }
 }
 
-function downloadBinary() {
+async function downloadBinary() {
   if (!state.image) {
     return;
   }
 
   ensureEncoded();
   const identifier = sanitizeIdentifier(elements.arrayName.value, state.identifier);
-  downloadBlob(new Blob([state.rgb565], { type: "application/octet-stream" }), `${identifier}.bin`);
-  showToast("RGB565 原始数据已生成");
+  const saved = await downloadBlob(
+    new Blob([state.rgb565], { type: "application/octet-stream" }),
+    `${identifier}.bin`,
+  );
+  if (saved) {
+    showToast("RGB565 原始数据已生成");
+  }
 }
 
 async function downloadIcon() {
@@ -509,8 +546,13 @@ async function downloadIcon() {
     const png = await renderAsPng();
     const bytes = new Uint8Array(await png.arrayBuffer());
     const ico = createIco(bytes, size);
-    downloadBlob(new Blob([ico], { type: "image/x-icon" }), "favicon.ico");
-    showToast("项目图标 favicon.ico 已生成");
+    const saved = await downloadBlob(
+      new Blob([ico], { type: "image/x-icon" }),
+      "favicon.ico",
+    );
+    if (saved) {
+      showToast("项目图标 favicon.ico 已生成");
+    }
   } catch {
     showToast("项目图标生成失败");
   } finally {
@@ -628,6 +670,23 @@ elements.downloadHeader.addEventListener("click", downloadHeader);
 elements.downloadBin.addEventListener("click", downloadBinary);
 elements.downloadIco.addEventListener("click", downloadIcon);
 elements.closeHelp.addEventListener("click", () => elements.helpDialog.close());
+
+for (const link of document.querySelectorAll("a[data-external]")) {
+  link.addEventListener("click", async (event) => {
+    if (!isTauriRuntime()) {
+      return;
+    }
+
+    event.preventDefault();
+    try {
+      await window.__TAURI__.core.invoke("open_external", {
+        url: link.href,
+      });
+    } catch {
+      showToast("链接打开失败");
+    }
+  });
+}
 
 if ("ResizeObserver" in window) {
   const canvasResizeObserver = new ResizeObserver(sizeCanvasForStage);

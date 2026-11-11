@@ -1,6 +1,9 @@
 .DS_Store
 Thumbs.db
 node_modules/
+app-dist/
+release-assets/
+src-tauri/target/
 playwright-report/
 test-results/
 *.log
