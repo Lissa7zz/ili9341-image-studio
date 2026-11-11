@@ -25,8 +25,13 @@ jobs:
         run: npm ci
       - name: Run unit and DOM tests
         run: npm test
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Cache Chromium
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium headless shell
+        run: npx playwright install --only-shell chromium
       - name: Run browser tests
         run: npm run test:e2e
       - name: Upload Playwright results
