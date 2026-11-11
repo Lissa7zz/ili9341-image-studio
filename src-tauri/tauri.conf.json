@@ -43,6 +43,7 @@
     "longDescription": "Crop images, convert them to RGB565, and generate paired STM32 C source and header files. All image processing happens locally.",
     "homepage": "https://lissa7zz.github.io/ili9341-image-studio/",
     "copyright": "Copyright (C) 2026 Lissa7zz",
+    "publisher": "Lissa7zz",
     "license": "MIT",
     "windows": {
       "webviewInstallMode": {
