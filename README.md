@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml)
 
+**[快速入口 / Quick access: Open Pixel2Panel online](https://lissa7zz.github.io/ili9341-image-studio/)**
+
 # Pixel2Panel
 
 Pixel2Panel is a browser-based image preparation tool for STM32 and ILI9341
@@ -11,7 +13,11 @@ RGB565, and download a C header that can be added directly to an STM32 project.
 All image processing happens locally in the browser. Images are not uploaded
 to a server.
 
-![Pixel2Panel](assets/logo-256.png)
+## Demo
+
+[![Pixel2Panel workflow](assets/demo.gif)](assets/demo.gif)
+
+![STM32G474 hardware result](assets/demo-result.jpg)
 
 ## Features
 

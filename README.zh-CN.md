@@ -2,13 +2,19 @@
 
 [![CI](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml)
 
+**[快速入口：打开 Pixel2Panel 在线工具](https://lissa7zz.github.io/ili9341-image-studio/)**
+
 # Pixel2Panel
 
 Pixel2Panel 是一个面向 STM32 和 ILI9341 屏幕的浏览器图片处理工具。拖入图片后，它会自动裁切成屏幕尺寸，转换为 RGB565，并生成可直接加入 STM32 工程的 C 头文件。
 
 所有图片处理都在浏览器本地完成，不会上传到服务器。
 
-![Pixel2Panel](assets/logo-256.png)
+## 演示
+
+[![Pixel2Panel 操作演示](assets/demo.gif)](assets/demo.gif)
+
+![STM32G474 实机显示成果](assets/demo-result.jpg)
 
 ## 功能
 
