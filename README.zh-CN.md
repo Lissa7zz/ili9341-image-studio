@@ -2,21 +2,21 @@
 
 [![CI](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Lissa7zz/ili9341-image-studio/actions/workflows/ci.yml)
 
-**[快速入口：打开 Pixel2Panel 在线工具](https://lissa7zz.github.io/ili9341-image-studio/)**
+**⚡[快速入口：打开 Pixel2Panel 在线工具](https://lissa7zz.github.io/ili9341-image-studio/)**
 
-# Pixel2Panel
+# 🔥Pixel2Panel
 
 Pixel2Panel 是一个面向 STM32 和 ILI9341 屏幕的浏览器图片处理工具。拖入图片后，它会自动裁切成屏幕尺寸，转换为 RGB565，并生成可直接加入 STM32 工程的 C 头文件。
 
 所有图片处理都在浏览器本地完成，不会上传到服务器。
 
-## 演示
+## 🀄演示
 
 [![Pixel2Panel 操作演示](assets/demo.gif)](assets/demo.gif)
 
 ![STM32G474 实机显示成果](assets/demo-result.jpg)
 
-## 下载 Windows 版
+## 💾下载 Windows 版
 
 最新版本提供：
 
@@ -29,7 +29,7 @@ Pixel2Panel 是一个面向 STM32 和 ILI9341 屏幕的浏览器图片处理工�
 
 Windows 10 和 Windows 11 通常已经安装 Microsoft WebView2。便携版使用本地图片处理，不需要联网。
 
-## 功能
+## 🗿功能
 
 - JPG、PNG、WebP、BMP 图片输入
 - 填充、完整显示、拉伸三种适配模式
@@ -40,7 +40,7 @@ Windows 10 和 Windows 11 通常已经安装 Microsoft WebView2。便携版使�
 - 零运行时依赖，不需要后端
 - 可选的原生 Windows 桌面版本
 
-## 快速启动
+## 🗿快速启动
 
 需要 Node.js 18 或更高版本。
 
@@ -54,7 +54,7 @@ npm start
 
 Windows 用户也可以双击 `start.bat`，脚本会启动本地服务并打开浏览器。
 
-### Windows 桌面版开发
+### 🖥Windows 桌面版开发
 
 ```bash
 npm ci
@@ -70,7 +70,7 @@ npm run release:prepare
 
 生成文件位于 `release-assets/`。
 
-## 导出格式
+## 🗿导出格式
 
 默认输出为 `320 x 240`，RGB565。下载内容是一个 ZIP，包含声明头文件和对应源码文件。每个像素两个字节，高字节先发送。这个顺序与 STM32 小端内存中的 `uint16_t` 顺序以及 ILI9341 的接收顺序一致。
 
@@ -97,7 +97,7 @@ ILI9341_DrawRGB565Image(
 320 * 240 * 2 = 153,600 bytes
 ```
 
-## 开发
+## 🗿开发
 
 ```bash
 npm test
@@ -109,14 +109,14 @@ npm start
 
 单元和 DOM 测试使用 Node Test Runner 与 jsdom。Chromium 浏览器测试使用 Playwright，覆盖桌面和移动尺寸。生产页面本身没有运行时依赖。
 
-## 路线图
+## 🗿路线图
 
 - 批量图片处理和多图轮播头文件
 - 从外部 SPI Flash 加载的压缩格式
 - 更细致的拖拽构图和对比预览
 - 自动生成 STM32 示例工程
 
-## 第三方参考
+## 🗿第三方参考
 
 工作流参考了以下在线工具的使用方式，但本项目不依赖它们的服务器或接口：
 
@@ -124,13 +124,13 @@ npm start
 - AppShot ICO：项目图标生成
 - Image to RGB565 Converter：RGB565 数据转换
 
-## 开发者
+## 🗿开发者
 
 - 开发者：Lissa7zz
 - AI 协作：OpenAI Codex
 - 联系：[millergordon72@gmail.com](mailto:millergordon72@gmail.com)
 
-## 开源协议
+## 🗿开源协议
 
 Copyright (C) 2026 Lissa7zz
 
