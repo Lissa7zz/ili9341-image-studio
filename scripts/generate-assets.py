@@ -8,70 +8,11 @@ ASSETS = ROOT / "assets"
 ASSETS.mkdir(parents=True, exist_ok=True)
 
 
+icon_source = Image.open(ASSETS / "app-icon-source.png").convert("RGB")
+
+
 def create_logo(size: int) -> Image.Image:
-    scale = size / 256
-    image = Image.new("RGB", (size, size), "#102a2d")
-    draw = ImageDraw.Draw(image)
-    margin = round(30 * scale)
-    screen = (margin, round(52 * scale), size - margin, size - round(55 * scale))
-    draw.rounded_rectangle(
-        screen,
-        radius=round(22 * scale),
-        fill="#eaf4f1",
-        outline="#58c5ad",
-        width=max(2, round(8 * scale)),
-    )
-    inner = (
-        screen[0] + round(13 * scale),
-        screen[1] + round(13 * scale),
-        screen[2] - round(13 * scale),
-        screen[3] - round(13 * scale),
-    )
-    draw.rectangle(inner, fill="#173b43")
-    draw.ellipse(
-        (
-            round(165 * scale),
-            round(82 * scale),
-            round(202 * scale),
-            round(119 * scale),
-        ),
-        fill="#e5b86c",
-    )
-    draw.polygon(
-        [
-            (inner[0], round(176 * scale)),
-            (round(78 * scale), round(111 * scale)),
-            (round(113 * scale), round(157 * scale)),
-            (round(150 * scale), round(100 * scale)),
-            (inner[2], round(169 * scale)),
-            (inner[2], inner[3]),
-            (inner[0], inner[3]),
-        ],
-        fill="#4d817e",
-    )
-    draw.polygon(
-        [
-            (inner[0], round(196 * scale)),
-            (round(81 * scale), round(154 * scale)),
-            (round(127 * scale), round(202 * scale)),
-            (round(178 * scale), round(141 * scale)),
-            (inner[2], round(194 * scale)),
-            (inner[2], inner[3]),
-            (inner[0], inner[3]),
-        ],
-        fill="#24575a",
-    )
-    draw.rounded_rectangle(
-        (
-            round(84 * scale),
-            size - round(50 * scale),
-            size - round(84 * scale),
-            size - round(38 * scale),
-        ),
-        radius=round(5 * scale),
-        fill="#d47535",
-    )
-    return image
+    return icon_source.resize((size, size), Image.Resampling.LANCZOS)
 
 
 logo = create_logo(256)

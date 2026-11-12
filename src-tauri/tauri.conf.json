@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Pixel2Panel",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "identifier": "io.github.lissa7zz.pixel2panel",
   "build": {
     "beforeDevCommand": "npm start",

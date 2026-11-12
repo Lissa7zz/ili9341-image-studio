@@ -1,6 +1,6 @@
 {
   "name": "ili9341-image-studio",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Browser-based RGB565 image converter for STM32 and ILI9341 displays",
   "type": "module",

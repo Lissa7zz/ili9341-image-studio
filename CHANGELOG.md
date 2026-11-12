@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2026-11-12
+
+### Changed
+
+- Replaced the website, application, installer, and release icon with the new
+  Pixel2Panel brand mark.
+
 ## [0.3.0] - 2026-11-11
 
 ### Added
